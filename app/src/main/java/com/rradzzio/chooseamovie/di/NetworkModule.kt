@@ -3,6 +3,7 @@ package com.rradzzio.chooseamovie.di
 import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.rradzzio.chooseamovie.BuildConfig
 import com.rradzzio.chooseamovie.R
 import com.rradzzio.chooseamovie.data.remote.model.MovieDtoMapper
 import com.rradzzio.chooseamovie.util.Constants
@@ -12,7 +13,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -44,10 +47,23 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideOkHttpInterceptor(): Interceptor = Interceptor { chain: Interceptor.Chain ->
+        val original: Request = chain.request()
+        val requestBuilder: Request.Builder = original.newBuilder()
+                .addHeader("x-rapidapi-key", BuildConfig.API_KEY)
+                .addHeader("x-rapidapi-host", "movie-database-imdb-alternative.p.rapidapi.com")
+        val request: Request = requestBuilder.build()
+        chain.proceed(request)
+    }
+
+    @Singleton
+    @Provides
     fun provideOkHttpClient(
-            loggingInterceptor: HttpLoggingInterceptor
+            loggingInterceptor: HttpLoggingInterceptor,
+            interceptor: Interceptor
     ): OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor(interceptor)
             .build()
 
     @Singleton
