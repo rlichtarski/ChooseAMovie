@@ -1,7 +1,8 @@
-package com.rradzzio.chooseamovie
+package com.rradzzio.chooseamovie.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.rradzzio.chooseamovie.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

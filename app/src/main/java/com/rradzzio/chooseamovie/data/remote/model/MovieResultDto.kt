@@ -7,9 +7,9 @@ import com.squareup.moshi.JsonClass
 data class MovieResultDto(
 
         @Json(name = "Search")
-        val search: List<MovieDto>,
+        val search: List<MovieDto>? = null,
 
         @Json(name = "Response")
-        val response: String
+        val response: String? = null
 
 )
