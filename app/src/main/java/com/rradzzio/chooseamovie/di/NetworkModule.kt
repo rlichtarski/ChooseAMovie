@@ -5,6 +5,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.rradzzio.chooseamovie.BuildConfig
 import com.rradzzio.chooseamovie.R
+import com.rradzzio.chooseamovie.data.remote.MovieApiService
 import com.rradzzio.chooseamovie.data.remote.model.MovieDtoMapper
 import com.rradzzio.chooseamovie.util.Constants
 import com.squareup.moshi.Moshi
@@ -75,5 +76,10 @@ object NetworkModule {
                     .placeholder(R.drawable.ic_image)
                     .error(R.drawable.ic_image)
     )
+
+    @Provides
+    @Singleton
+    fun provideMovieApiService(retrofit: Retrofit): MovieApiService = retrofit
+            .create(MovieApiService::class.java)
 
 }
