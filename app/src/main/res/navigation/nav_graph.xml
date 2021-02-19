@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/addMovieFragment">
+
+    <fragment
+        android:id="@+id/addMovieFragment"
+        android:name="com.rradzzio.chooseamovie.presentation.ui.AddMovieFragment"
+        android:label="AddMovieFragment" >
+        <action
+            android:id="@+id/action_addMovieFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.rradzzio.chooseamovie.presentation.ui.MoviesFragment"
+        android:label="MoviesFragment" >
+        <action
+            android:id="@+id/action_moviesFragment_to_addMovieFragment"
+            app:destination="@id/addMovieFragment" />
+    </fragment>
+</navigation>

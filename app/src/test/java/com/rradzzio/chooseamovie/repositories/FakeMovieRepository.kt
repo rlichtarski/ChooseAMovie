@@ -21,7 +21,7 @@ class FakeMovieRepository : MovieRepository {
         shouldReturnNetworkError = value
     }
 
-    override suspend fun insertMovieList(movieList: List<MovieEntity>) {
+    override suspend fun insertMovieList(movieList: List<Movie>) {
         for (movie in movieList) {
             movies.add(movie)
         }

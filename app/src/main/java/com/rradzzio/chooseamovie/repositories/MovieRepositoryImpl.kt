@@ -19,20 +19,20 @@ class MovieRepositoryImpl @Inject constructor(
         private val movieDtoMapper: MovieDtoMapper
 ) : MovieRepository {
 
-    override suspend fun insertMovieList(movieList: List<MovieEntity>) {
-        moviesDao.insertMovieList(movieList)
+    override suspend fun insertMovieList(movieList: List<Movie>) {
+        moviesDao.insertMovieList(movieEntityMapper.fromDomainListToEntity(movieList))
     }
 
-    override suspend fun insertMovie(movie: MovieEntity) {
-        moviesDao.insertMovie(movie)
+    override suspend fun insertMovie(movie: Movie) {
+        moviesDao.insertMovie(movieEntityMapper.mapFromDomainModel(movie))
     }
 
-    override suspend fun deleteMovie(movie: MovieEntity) {
-        moviesDao.deleteMovie(movie)
+    override suspend fun deleteMovie(movie: Movie) {
+        moviesDao.deleteMovie(movieEntityMapper.mapFromDomainModel(movie))
     }
 
-    override suspend fun deleteMovieList(movieList: List<MovieEntity>) {
-        moviesDao.deleteMovieList(movieList)
+    override suspend fun deleteMovieList(movieList: List<Movie>) {
+        moviesDao.deleteMovieList(movieEntityMapper.fromDomainListToEntity(movieList))
     }
 
     override fun returnAllMovies(): Flow<List<Movie>> {
