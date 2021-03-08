@@ -1,6 +1,5 @@
 package com.rradzzio.chooseamovie.repositories
 
-import com.rradzzio.chooseamovie.data.local.model.MovieEntity
 import com.rradzzio.chooseamovie.domain.model.Movie
 import com.rradzzio.chooseamovie.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -9,11 +8,7 @@ import kotlinx.coroutines.flow.map
 
 class FakeMovieRepository : MovieRepository {
 
-    private val movies = mutableListOf<MovieEntity>()
-
-    private val observableMovies: Flow<List<MovieEntity>> = flow {
-        emit(movies)
-    }
+    private val movies: MutableList<Movie> = mutableListOf()
 
     private var shouldReturnNetworkError = false
 
@@ -27,47 +22,26 @@ class FakeMovieRepository : MovieRepository {
         }
     }
 
-    override suspend fun insertMovie(movie: MovieEntity) {
+    override suspend fun insertMovie(movie: Movie) {
         movies.add(movie)
     }
 
-    override suspend fun deleteMovie(movie: MovieEntity) {
+    override suspend fun deleteMovie(movie: Movie) {
         movies.remove(movie)
     }
 
-    override suspend fun deleteMovieList(movieList: List<MovieEntity>) {
-        for (movie in movies) {
-            movies.remove(movie)
-        }
-    }
+    override suspend fun deleteMovieList(movieList: List<Movie>) = movies.clear()
 
     override fun returnAllMovies(): Flow<List<Movie>> = flow {
-        observableMovies.map { movieEntityList ->
-            movieEntityList.map {
-                mapToDomainModel(it)
-            }
-        }
-
+        emit(movies)
     }
 
-    override fun getMovies(movieSearchQuery: String): Flow<Resource<List<Movie>>> {
-        return if (shouldReturnNetworkError) {
-            flow {
-                Resource.error("Error", null)
-            }
+    override fun getMovies(movieSearchQuery: String): Flow<Resource<List<Movie>>> = flow {
+        if (shouldReturnNetworkError) {
+            emit(Resource.error("Error", null))
         } else {
-            flow {
-                Resource.success(listOf(movies))
-            }
+            emit(Resource.success(movies))
         }
-    }
-
-    private fun mapToDomainModel(model: MovieEntity): Movie {
-        return Movie(
-                title = model.title,
-                year = model.year,
-                poster = model.poster
-        )
     }
 
 }

@@ -8,6 +8,8 @@ class Constants {
 
         const val MOVIE_DATABASE_NAME = "movie_db"
 
+        const val MAX_MOVIE_TITLE_LENGTH = 40
+
     }
 
 }

@@ -43,6 +43,11 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .build()
+
+    @Singleton
+    @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 

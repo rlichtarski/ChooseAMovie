@@ -17,7 +17,11 @@ android {
         versionCode 1
         versionName "1.0"
         buildConfigField("String", "API_KEY", API_KEY)
-
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
 
         testInstrumentationRunner "com.rradzzio.chooseamovie.HiltTestRunner"
     }
@@ -36,8 +40,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
+    /*kotlinOptions {
         jvmTarget = '1.8'
+    }*/
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
     }
 
     kapt.includeCompileClasspath = false
