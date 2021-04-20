@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +25,7 @@ class MovieViewModel @Inject constructor(
     val moviesFromDb: LiveData<List<Movie>> get() = _moviesFromDb
 
     fun getMovies(searchQuery: String) {
+        Timber.d("getMovies...")
         _movies.postValue(Event(Resource.loading(null)))
         if(searchQuery.isBlank()) {
             _movies.postValue(Event(Resource.error("The fields must not be empty", null)))

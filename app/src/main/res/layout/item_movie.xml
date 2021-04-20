@@ -19,12 +19,23 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enola holmes"
         android:textColor="#000000"
         android:textSize="24sp"
         android:layout_marginTop="12dp"
         android:layout_marginStart="8dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintStart_toEndOf="@id/ivMoviePoster"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/ivMoviePoster"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

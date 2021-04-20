@@ -8,7 +8,7 @@ import retrofit2.http.Query
 interface MovieApiService {
 
     @GET("/")
-    fun getMovies(
+    suspend fun getMovies(
             @Query("s") movieSearchQuery: String,
             @Query("r") returnType: String = "json"
     ): Response<MovieResultDto>

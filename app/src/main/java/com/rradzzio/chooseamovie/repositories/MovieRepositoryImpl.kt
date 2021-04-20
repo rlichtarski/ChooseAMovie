@@ -1,7 +1,6 @@
 package com.rradzzio.chooseamovie.repositories
 
 import com.rradzzio.chooseamovie.data.local.MoviesDao
-import com.rradzzio.chooseamovie.data.local.model.MovieEntity
 import com.rradzzio.chooseamovie.data.local.model.MovieEntityMapper
 import com.rradzzio.chooseamovie.data.remote.MovieApiService
 import com.rradzzio.chooseamovie.data.remote.model.MovieDtoMapper
@@ -10,6 +9,7 @@ import com.rradzzio.chooseamovie.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -28,7 +28,10 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteMovie(movie: Movie) {
+        val m = movieEntityMapper.mapFromDomainModel(movie)
+        Timber.e("deleteMovie repository before dao   $m")
         moviesDao.deleteMovie(movieEntityMapper.mapFromDomainModel(movie))
+        Timber.e("deleteMovie repository after dao   $movie")
     }
 
     override suspend fun deleteMovieList(movieList: List<Movie>) {
@@ -44,19 +47,37 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getMovies(movieSearchQuery: String): Flow<Resource<List<Movie>>> = flow {
         try {
             val response = movieApiService.getMovies(movieSearchQuery)
+            Timber.d("getMovies: ${response.body()}")
             if (response.isSuccessful) {
                 response.body()?.let { movieResultDto ->
-                    return@let Resource.success(
-                            movieResultDto.search?.let {
-                                movieDtoMapper.fromDtoListToDomain(it)
-                            }
+
+                    val movieResult = movieResultDto.search?.let {
+                        movieDtoMapper.fromDtoListToDomain(it)
+                    }
+                    movieResult?.forEach { movie ->
+                        Timber.d("movie: $movie")
+                    }
+
+                    emit(
+                            Resource.success(
+                                    movieResultDto.search?.let {
+                                        movieDtoMapper.fromDtoListToDomain(it)
+                                    }
+                            )
                     )
-                } ?: returnUnknownError()
+                } ?: emit(Resource.error(
+                        "An unknown error occurred",
+                        null
+                ))
             } else {
-                returnUnknownError()
+                emit(Resource.error(
+                        "An unknown error occurred",
+                        null
+                ))
             }
         } catch (e: Exception) {
-            Resource.error("Couldn't reach the server. Check internet connection", null)
+            Timber.e("exception: ${e.message}")
+            emit(Resource.error("Couldn't reach the server. Check internet connection", null))
         }
     }
 

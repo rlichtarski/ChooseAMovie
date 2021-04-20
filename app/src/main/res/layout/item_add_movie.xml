@@ -22,9 +22,21 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="2dp"
         android:textSize="20sp"
-        android:text="Enola holmes"
+        android:textColor="#000000" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/movieYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/poster"
+        android:layout_below="@+id/movieTitle"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:textSize="16sp"
         android:textColor="#000000" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -33,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
-        app:backgroundTint="@color/black"
         app:borderWidth="0dp"
         app:fabSize="normal"
         app:srcCompat="@drawable/baseline_add_white_18" />
