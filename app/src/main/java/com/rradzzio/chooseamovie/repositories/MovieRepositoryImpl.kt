@@ -28,10 +28,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteMovie(movie: Movie) {
-        val m = movieEntityMapper.mapFromDomainModel(movie)
-        Timber.e("deleteMovie repository before dao   $m")
         moviesDao.deleteMovie(movieEntityMapper.mapFromDomainModel(movie))
-        Timber.e("deleteMovie repository after dao   $movie")
     }
 
     override suspend fun deleteMovieList(movieList: List<Movie>) {

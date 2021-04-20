@@ -8,6 +8,7 @@ class MovieEntityMapper : DomainMapper<MovieEntity, Movie> {
 
     override fun mapToDomainModel(model: MovieEntity): Movie {
         return Movie(
+            pk = model.pk,
             title = model.title,
             year =  model.year,
             poster = model.poster
@@ -16,6 +17,7 @@ class MovieEntityMapper : DomainMapper<MovieEntity, Movie> {
 
     override fun mapFromDomainModel(domainModel: Movie): MovieEntity {
         return MovieEntity(
+            pk = domainModel.pk,
             title = domainModel.title,
             year = domainModel.year,
             poster = domainModel.poster
