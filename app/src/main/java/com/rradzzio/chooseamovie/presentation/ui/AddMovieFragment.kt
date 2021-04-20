@@ -1,9 +1,11 @@
 package com.rradzzio.chooseamovie.presentation.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import com.rradzzio.chooseamovie.databinding.FragmentAddMovieBinding
 import com.rradzzio.chooseamovie.presentation.ui.adapters.AddMovieListAdapter
 import com.rradzzio.chooseamovie.util.Constants
 import com.rradzzio.chooseamovie.util.Status
+import com.rradzzio.chooseamovie.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -81,6 +84,7 @@ class AddMovieFragment @Inject constructor(
     }
 
     private fun searchMovie() {
+        hideKeyboard()
         if(binding.etMovieTitle.text.toString().isBlank()) {
             Toast.makeText(activity, Constants.EMPTY_MOVIE_SEARCH, Toast.LENGTH_SHORT).show()
             return
@@ -107,3 +111,4 @@ class AddMovieFragment @Inject constructor(
         _binding = null
     }
 }
+
