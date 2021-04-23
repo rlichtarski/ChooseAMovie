@@ -1,5 +1,5 @@
 # ChooseAMovie
-A movie Android app using Movie Database IMDB Alternative API with Unit & UI testing. The app uses MVVM architecture with Jetpack (Room, ViewModel, LiveData, View Binding), Hilt, Coroutines, Flows, Moshi, etc...
+A movie Android app using [Movie Database IMDB Alternative API](https://rapidapi.com/rapidapi/api/movie-database-imdb-alternative/) with Unit & UI testing. The app uses MVVM architecture with Jetpack (Room, ViewModel, LiveData, View Binding), Hilt, Coroutines, Flows, Moshi, etc...
 
 # Project features
 The tech stacks and libraries used in this app:
