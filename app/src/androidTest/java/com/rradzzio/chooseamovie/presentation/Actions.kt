@@ -10,8 +10,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.BoundedMatcher
-import com.rradzzio.chooseamovie.presentation.ui.adapters.MovieListAdapter
-import org.hamcrest.BaseMatcher
+import com.rradzzio.chooseamovie.presentation.ui.adapters.AddMovieListAdapter
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.any
@@ -39,6 +38,18 @@ fun hasItemAtPosition(position: Int, matcher: Matcher<View>) = object : BoundedM
         return matcher.matches(viewHolder?.itemView)
     }
 
+}
+
+fun isFabEnabled(position: Int) = object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+
+    override fun describeTo(description: Description?) {
+
+    }
+
+    override fun matchesSafely(item: RecyclerView?): Boolean {
+        val viewHolder: AddMovieListAdapter.AddMovieViewHolder = item?.findViewHolderForAdapterPosition(position) as AddMovieListAdapter.AddMovieViewHolder
+        return viewHolder.binding.fabAddMovie.isEnabled
+    }
 }
 
 //inspired by: https://stackoverflow.com/a/63568323/8505977

@@ -7,24 +7,23 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.common.truth.Truth.assertThat
 import androidx.test.filters.MediumTest
 import com.rradzzio.chooseamovie.FakeMovieData
 import com.rradzzio.chooseamovie.R
-import com.rradzzio.chooseamovie.domain.model.Movie
 import com.rradzzio.chooseamovie.launchFragmentInHiltContainer
 import com.rradzzio.chooseamovie.presentation.ToastMatcher
 import com.rradzzio.chooseamovie.presentation.clickRecyclerViewFabAction
 import com.rradzzio.chooseamovie.presentation.hasItemAtPosition
+import com.rradzzio.chooseamovie.presentation.isFabEnabled
 import com.rradzzio.chooseamovie.util.Constants
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -109,6 +108,9 @@ class AddMovieFragmentTest {
                 0, clickRecyclerViewFabAction(R.id.fabAddMovie)
             )
         )
+
+        onView(withId(R.id.searchedMoviesRv))
+            .check(matches(not((isFabEnabled(0))))) //assert that the fab is disabled after click
 
         onView(withText(Constants.ADDED_MOVIE_TO_DB))
             .inRoot(ToastMatcher())

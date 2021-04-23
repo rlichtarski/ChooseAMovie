@@ -60,7 +60,7 @@ class AddMovieListAdapter @Inject constructor(
         set(value) = differ.submitList(value)
 
     class AddMovieViewHolder(
-        private val binding: ItemAddMovieBinding,
+        val binding: ItemAddMovieBinding,
         private val requestManager: RequestManager,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -71,6 +71,7 @@ class AddMovieListAdapter @Inject constructor(
                     onItemClickListener?.let { click ->
                         click(item)
                     }
+                    fabAddMovie.isEnabled = false
                 }
 
                 requestManager
