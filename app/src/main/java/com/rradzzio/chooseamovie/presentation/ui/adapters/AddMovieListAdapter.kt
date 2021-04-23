@@ -64,8 +64,10 @@ class AddMovieListAdapter @Inject constructor(
         private val requestManager: RequestManager,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Movie, onItemClickListener: ((Movie) -> Unit)?) = with(itemView) {
+        fun bind(item: Movie, onItemClickListener: ((Movie) -> Unit)?) {
             binding.apply {
+
+                fabAddMovie.isEnabled = true
 
                 fabAddMovie.setOnClickListener {
                     onItemClickListener?.let { click ->
