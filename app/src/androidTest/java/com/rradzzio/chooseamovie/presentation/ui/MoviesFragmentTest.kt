@@ -12,19 +12,15 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
-import com.google.common.truth.Truth
 import com.google.common.truth.Truth.*
-import com.rradzzio.chooseamovie.FakeMovieData
+import com.rradzzio.chooseamovie.FakeMovieDataAndroidTest
 import com.rradzzio.chooseamovie.R
-import com.rradzzio.chooseamovie.getOrAwaitValueAndroidTest
 import com.rradzzio.chooseamovie.launchFragmentInHiltContainer
 import com.rradzzio.chooseamovie.presentation.ToastMatcher
-import com.rradzzio.chooseamovie.presentation.clickRecyclerViewFabAction
 import com.rradzzio.chooseamovie.util.Constants
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -69,7 +65,7 @@ class MoviesFragmentTest {
         launchFragmentInHiltContainer<MoviesFragment>(
             fragmentFactory = testFragmentFactory
         ) {
-            movieListAdapter.movieItems = FakeMovieData.movies
+            movieListAdapter.movieItems = FakeMovieDataAndroidTest.movies
         }
         onView(withId(R.id.rvMovieItems)).check(matches(isDisplayed()))
     }
@@ -81,7 +77,7 @@ class MoviesFragmentTest {
             fragmentFactory = testFragmentFactory
         ) {
             testMovieViewModel = viewModel
-            testMovieViewModel?.insertMovie(FakeMovieData.movie)
+            testMovieViewModel?.insertMovie(FakeMovieDataAndroidTest.movie)
         }
 
         onView(withId(R.id.rvMovieItems)).perform(
@@ -90,7 +86,7 @@ class MoviesFragmentTest {
             )
         )
 
-        assertThat(testMovieViewModel?.moviesFromDb?.value).doesNotContain(FakeMovieData.movie)
+        assertThat(testMovieViewModel?.moviesFromDb?.value).doesNotContain(FakeMovieDataAndroidTest.movie)
 
         onView(ViewMatchers.withText(Constants.DELETED_MOVIE_FROM_DB))
             .inRoot(ToastMatcher())

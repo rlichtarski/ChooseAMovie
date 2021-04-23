@@ -3,8 +3,9 @@ package com.rradzzio.chooseamovie.presentation.ui
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
+import com.rradzzio.chooseamovie.FakeMovieDataTest.movie
+import com.rradzzio.chooseamovie.FakeMovieDataTest.movies
 import com.rradzzio.chooseamovie.MainCoroutineRule
-import com.rradzzio.chooseamovie.data.local.model.MovieEntity
 import com.rradzzio.chooseamovie.domain.model.Movie
 import com.rradzzio.chooseamovie.getOrAwaitValueTest
 import com.rradzzio.chooseamovie.repositories.FakeMovieRepository
@@ -97,7 +98,6 @@ class MovieViewModelTest {
 
     @Test
     fun `insert movie returns success`() {
-        val movie = Movie("Ford v Ferrari", "2019", "poster1")
         viewModel.insertMovie(movie)
         viewModel.returnAllMoviesFromDb()
 
@@ -108,21 +108,16 @@ class MovieViewModelTest {
 
     @Test
     fun `insert movie list returns success`() {
-        val movie = Movie( "Ford v Ferrari", "2019", "poster1")
-        val movie2 = Movie("Rush", "2013", "poster2")
-        val movie3 = Movie("Cars", "2006", "poster3")
-        val movieList = listOf(movie, movie2, movie3)
-        viewModel.insertMovieList(movieList)
+        viewModel.insertMovieList(movies)
         viewModel.returnAllMoviesFromDb()
 
         val value = viewModel.moviesFromDb.getOrAwaitValueTest()
 
-        assertThat(value).containsExactlyElementsIn(movieList)
+        assertThat(value).containsExactlyElementsIn(movies)
     }
 
     @Test
     fun `delete movie returns success`() {
-        val movie = Movie("Ford v Ferrari", "2019", "poster1")
         viewModel.insertMovie(movie)
         viewModel.deleteMovie(movie)
         viewModel.returnAllMoviesFromDb()
@@ -134,17 +129,13 @@ class MovieViewModelTest {
 
     @Test
     fun `delete movie list returns success`() {
-        val movie = Movie( "Ford v Ferrari", "2019", "poster1")
-        val movie2 = Movie("Rush", "2013", "poster2")
-        val movie3 = Movie("Cars", "2006", "poster3")
-        val movieList = listOf(movie, movie2, movie3)
-        viewModel.insertMovieList(movieList)
-        viewModel.deleteMovieList(movieList)
+        viewModel.insertMovieList(movies)
+        viewModel.deleteMovieList(movies)
         viewModel.returnAllMoviesFromDb()
 
         val value = viewModel.moviesFromDb.getOrAwaitValueTest()
 
-        assertThat(value).doesNotContain(movieList)
+        assertThat(value).doesNotContain(movies)
     }
 
 }

@@ -12,7 +12,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.google.common.truth.Truth.assertThat
 import androidx.test.filters.MediumTest
-import com.rradzzio.chooseamovie.FakeMovieData
+import com.rradzzio.chooseamovie.FakeMovieDataAndroidTest
 import com.rradzzio.chooseamovie.R
 import com.rradzzio.chooseamovie.launchFragmentInHiltContainer
 import com.rradzzio.chooseamovie.presentation.ToastMatcher
@@ -66,7 +66,7 @@ class AddMovieFragmentTest {
         launchFragmentInHiltContainer<AddMovieFragment>(
             fragmentFactory = testFragmentFactory
         ) {
-            addMovieListAdapter.movieItems = FakeMovieData.movies
+            addMovieListAdapter.movieItems = FakeMovieDataAndroidTest.movies
         }
         onView(withId(R.id.searchedMoviesRv)).check(matches(isDisplayed()))
     }
@@ -78,7 +78,7 @@ class AddMovieFragmentTest {
             fragmentFactory = testFragmentFactory
         ) {
             testMovieViewModel = viewModel
-            addMovieListAdapter.movieItems = FakeMovieData.movies
+            addMovieListAdapter.movieItems = FakeMovieDataAndroidTest.movies
             testMovieViewModel?.returnAllMoviesFromDb()
         }
 
@@ -89,7 +89,7 @@ class AddMovieFragmentTest {
         )
 
         assertThat(testMovieViewModel?.moviesFromDb?.value)
-            .contains(FakeMovieData.movies[0])
+            .contains(FakeMovieDataAndroidTest.movies[0])
     }
 
     @Test
@@ -99,7 +99,7 @@ class AddMovieFragmentTest {
             fragmentFactory = testFragmentFactory
         ) {
             testMovieViewModel = viewModel
-            addMovieListAdapter.movieItems = FakeMovieData.movies
+            addMovieListAdapter.movieItems = FakeMovieDataAndroidTest.movies
             testMovieViewModel?.returnAllMoviesFromDb()
         }
 

@@ -2,7 +2,7 @@ package com.rradzzio.chooseamovie
 
 import com.rradzzio.chooseamovie.domain.model.Movie
 
-object FakeMovieData {
+object FakeMovieDataTest {
 
     val movies = listOf(
         Movie(
@@ -15,6 +15,12 @@ object FakeMovieData {
             1,
             "Cars",
             "2006",
+            "https://"
+        ),
+        Movie(
+            2,
+            "Ford v Ferrari",
+            "2019",
             "https://"
         )
     )
